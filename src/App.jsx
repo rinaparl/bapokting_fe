@@ -1,10 +1,10 @@
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import HomePage from './pages/HomePage';
 import Statistik from './pages/StatistikPage';
 import LoginPage from './pages/LoginPage';
-import HeaderNav from './components/HeaderNav';
+import HeaderNav from './components/Header/HeaderNav';
 // import Footer from './components/Footer';
 
 function App() {

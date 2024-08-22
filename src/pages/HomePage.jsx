@@ -1,28 +1,16 @@
-
-// import PropTypes from 'prop-types';
-// import { useSearchParams } from 'react-router-dom';
+import React from 'react';
 import Tabel from '../components/KomoditiTable';
-import SearchBar from '../components/SearchBar';
+import Banner from '../components/Banner';
 
-function HomePageWrapper() {
+
+function HomePage() {
 
     return (
       <div className='homepage'>
-        <SearchBar
-        //   keyword={this.state.keyword}
-        //   keywordChange={this.onKeywordChangeHandler}
-        />
-        <Tabel 
-        // data={filteredKomoditi}
-         />
+        <Banner />
+        <Tabel />
       </div>
     );
   }
-// }
 
-// HomePage.propTypes = {
-//   defaultKeyword: PropTypes.string,
-//   keywordChange: PropTypes.func.isRequired,
-// };
-
-export default HomePageWrapper;
+export default HomePage;

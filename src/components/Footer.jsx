@@ -1,11 +1,19 @@
-// import React from 'react'
+import React from 'react';
+import { Container, Row, Col, Nav, NavItem, NavLink } from 'bootstrap';
 
-const Footer = () => {
+function Footer () {
   return (
-    <div>
-      Footer
-    </div>
-  )
+    <footer className='footer'>
+      <Row>
+        <Col>
+          <div>
+            @ {new Date().getFullYear()}{" "}
+            DISKOMINFO GARUT
+          </div>
+        </Col>
+      </Row>
+    </footer>
+  );
 }
 
 export default Footer;
