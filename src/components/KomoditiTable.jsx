@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../dist/css/main.css";
-import {
-  Table,
-  Spinner,
-  Alert,
-  Row,
-  Col,
-  Container,
-} from "react-bootstrap";
-import SearchBar from "../components/Header/SearchBar";
-import FilterBar from "./FilterBar";
-import DateFilter from "../components/Header/DateFilter";
+import { Table, Spinner, Alert, Row, Col, Container } from "react-bootstrap";
+import SearchBar from "../components/Tabel/SearchBar";
+import FilterBar from "../components/Tabel/FilterBar";
+import DateFilter from "../components/Tabel/DateFilter";
 
 function KomoditiTable() {
   const [hargaData, setHargaData] = useState([]);
@@ -49,17 +42,13 @@ function KomoditiTable() {
       .filter((item) =>
         item.komoditi_name.toLowerCase().includes(keyword.toLowerCase())
       )
-      .filter((item) => (filterKet ? item.keterangan === filterKet : true))
+      .filter((item) => (filterKet && filterKet !== "all" ? item.keterangan === filterKet : true))
       .filter((item) => (selectedDate ? item.tanggal === selectedDate : true));
     setFilteredData(filtered);
   }, [keyword, filterKet, selectedDate, hargaData]);
 
   const keywordChange = (e) => {
     setKeyword(e.target.value);
-  };
-
-  const filterKetChange = (e) => {
-    setFilterKet(e.target.value);
   };
 
   const handleDateChange = (e) => {
@@ -91,12 +80,12 @@ function KomoditiTable() {
           <SearchBar keyword={keyword} keywordChange={keywordChange} />
         </Col>
         <Col md={4}>
-          <FilterBar filterKet={filterKet} filterKetChange={filterKetChange} />
+          <FilterBar filterKet={filterKet} setFilterKet={setFilterKet} /> {/* Pastikan setFilterKet dioper dengan benar */}
         </Col>
         <Col md={4}>
           <DateFilter
             selectedDate={selectedDate}
-            handleDateChange={handleDateChange}
+            handleDateChange={setSelectedDate}
           />
         </Col>
       </Row>
@@ -201,14 +190,14 @@ function KomoditiTable() {
                 <td
                   style={{
                     backgroundColor:
-                      item.keterangan === "Naik"
+                      item.keterangan === "naik"
                         ? "red"
-                        : item.keterangan === "Turun"
-                        ? "green"
-                        : item.keterangan === "Tetap"
-                        ? "blue"
+                        : item.keterangan === "turun"
+                        ? "#006400"
+                        : item.keterangan === "tetap"
+                        ? "#4D96FF"
                         : "transparent",
-                    color: "black",
+                    color: "white",
                     textAlign: "center",
                   }}
                 >
@@ -217,23 +206,23 @@ function KomoditiTable() {
                 <td
                   style={{
                     backgroundColor:
-                      item.keterangan === "Naik"
+                      item.keterangan === "naik"
                         ? "red"
-                        : item.keterangan === "Turun"
-                        ? "green"
-                        : item.keterangan === "Tetap"
-                        ? "blue"
+                        : item.keterangan === "turun"
+                        ? "#006400"
+                        : item.keterangan === "tetap"
+                        ? "#4D96FF"
                         : "transparent",
                     color: "white",
                     textAlign: "center",
                   }}
                 >
-                  {item.keterangan === "Naik" ? (
+                  {item.keterangan === "naik" ? (
                     <div>
                       <i className="fas fa-arrow-up"></i>
                       <span className="pl-3">{item.persentase}</span>
                     </div>
-                  ) : item.keterangan === "Turun" ? (
+                  ) : item.keterangan === "turun" ? (
                     <div>
                       <i className="fas fa-arrow-down"></i>
                       <span className="pl-3">{item.persentase}</span>

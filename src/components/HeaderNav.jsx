@@ -1,13 +1,13 @@
 import React from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link as RouterLink } from 'react-router-dom';
-import logo from '../../assets/img/LogoBAPOKGarut.png';
-import "../../dist/css/main.css"
+import logo from '../assets/img/LogoBAPOKGarut.png';
+import "../dist/css/main.css"
 
 const HeaderNav = () => {
   return (
     <div>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className="nav">
         <Container>
           <Navbar.Brand as={RouterLink} to="/">
             <img
@@ -22,7 +22,7 @@ const HeaderNav = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
               <Nav.Link as={RouterLink} to="/">Home</Nav.Link>
-              <Nav.Link as={RouterLink} to="/statistik">Statistik</Nav.Link>
+              <Nav.Link as={RouterLink} to="/grafik">Grafik</Nav.Link>
             </Nav>
 
             <Nav>

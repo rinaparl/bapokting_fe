@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 
-const KeteranganFilter = ({ filter, setFilter }) => {
+const FilterBar = ({ filterKet, setFilterKet }) => {
   return (
-    <Form.Select onChange={(e) => setFilter(e.target.value)} className="mb-3">
+    <Form.Select onChange={(e) => setFilterKet(e.target.value)} className="mb-3">
       <option value="all">All</option>
       <option value="naik">Naik</option>
       <option value="turun">Turun</option>
@@ -12,4 +12,4 @@ const KeteranganFilter = ({ filter, setFilter }) => {
   );
 };
 
-export default KeteranganFilter;
+export default FilterBar;

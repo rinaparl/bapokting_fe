@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Nav, NavItem, NavLink } from 'bootstrap';
+import { Container, Row, Col, Nav, NavItem, NavLink } from 'react-bootstrap';
 
 function Footer () {
   return (
@@ -7,8 +7,8 @@ function Footer () {
       <Row>
         <Col>
           <div>
-            @ {new Date().getFullYear()}{" "}
-            DISKOMINFO GARUT
+            &copy; {new Date().getFullYear()}{" "}
+            Bahan Pokok Garut. DISKOMINFO GARUT
           </div>
         </Col>
       </Row>

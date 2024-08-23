@@ -2,13 +2,13 @@ import React from "react";
 import KomoditiGraph from "../components/KomoditiGraph";
 
 
-const Statistik = () => {
+const Grafik = () => {
   return (
     <div>
-      <h1>Statistik Harga Komoditi</h1>
+      <h1>Perkembangan Harga Bahan Pokok</h1>
       <KomoditiGraph />
     </div>
   )
 }
 
-export default Statistik;
+export default Grafik;
