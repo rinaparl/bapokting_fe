@@ -1,17 +1,43 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Dropdown, DropdownButton, Form } from "react-bootstrap";
+import "../../styles/main.css";
 
-const KomoditiFilter = ({ selectedKomoditi, setSelectedKomoditi, komoditiList }) => {
+function KomoditiFilter({ options = [], selectedKomoditi, onChange }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    const value = event.target.value;
+    const checked = event.target.checked;
+    
+    if (onChange) {
+      onChange(event);
+    }
+  };
+
+  const toggleDropdown = () => setShowDropdown((prev) => !prev);
+
   return (
-    <Form.Select value={selectedKomoditi} onChange={(e) => setSelectedKomoditi(e.target.value)} className="mb-3">
-      <option value="">Select Komoditi</option>
-      {komoditiList.map((komoditi, index) => (
-        <option key={index} value={komoditi}>
-          {komoditi}
-        </option>
-      ))}
-    </Form.Select>
+    <Dropdown show={showDropdown} onClick={toggleDropdown}>
+      <DropdownButton
+        // variant="secondary"
+        title="Filter Komoditi"
+        onClick={() => setShowDropdown((prev) => !prev)}
+      >
+        {options.map((option, index) => (
+          <Dropdown.Item key={index} as="div">
+            <Form.Check
+              type="checkbox"
+              id={`komoditi-${index}`}
+              label={option.label}
+              value={option.value}
+              checked={selectedKomoditi.includes(option.value)}
+              onChange={handleCheckboxChange}
+            />
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
+    </Dropdown>
   );
-};
+}
 
 export default KomoditiFilter;

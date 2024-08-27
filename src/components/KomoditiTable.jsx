@@ -1,34 +1,38 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../dist/css/main.css";
-import { Table, Spinner, Alert, Row, Col, Container } from "react-bootstrap";
-import SearchBar from "../components/Tabel/SearchBar";
-import FilterBar from "../components/Tabel/FilterBar";
-import DateFilter from "../components/Tabel/DateFilter";
+import { Table, Container, Alert, Spinner } from "react-bootstrap";
+import TableAction from "../components/Tabel/TableAction";
 
 function KomoditiTable() {
   const [hargaData, setHargaData] = useState([]);
-  const [tanggalUpdate, setTanggalUpdate] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filteredData, setFilteredData] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [komoditiOptions, setKomoditiOptions] = useState([]);
+  const [komoditi, setKomoditi] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [filterKet, setFilterKet] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     const getKomoditi = async () => {
       try {
         const response = await axios.get("http://localhost:5000/komoditi/list");
         if (response.data.success && Array.isArray(response.data.result)) {
+          const komoditiOptions = response.data.result.map(item => ({
+            label: item.komoditi_name,
+            value: item.komoditi_name
+          }));
+
           setHargaData(response.data.result);
-          setTanggalUpdate(response.data.result[0]?.tanggal);
           setFilteredData(response.data.result);
+          setKomoditiOptions(komoditiOptions);
+          // console.log("Komoditi Options:", komoditiOptions);
         } else {
           setError("Data yang diterima tidak sesuai");
         }
       } catch (err) {
-        setError("Error fetching data");
+        setError("Gagal mengambil data dari server");
       } finally {
         setLoading(false);
       }
@@ -38,58 +42,67 @@ function KomoditiTable() {
   }, []);
 
   useEffect(() => {
-    const filtered = hargaData
-      .filter((item) =>
+    let filtered = hargaData;
+
+    // Filter by keyword
+    if (keyword) {
+      filtered = filtered.filter(item =>
         item.komoditi_name.toLowerCase().includes(keyword.toLowerCase())
-      )
-      .filter((item) => (filterKet && filterKet !== "all" ? item.keterangan === filterKet : true))
-      .filter((item) => (selectedDate ? item.tanggal === selectedDate : true));
-    setFilteredData(filtered);
-  }, [keyword, filterKet, selectedDate, hargaData]);
-
-  const keywordChange = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
-  if (loading) return <Spinner animation="border" />;
-  if (error) return <Alert variant="danger">{error}</Alert>;
-
-  const formattedTanggalUpdate = new Date(tanggalUpdate).toLocaleDateString(
-    "id-ID",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      );
     }
-  );
+
+    // Filter by selected commodities
+    if (komoditi && komoditi.length > 0) {
+      filtered = filtered.filter(item => komoditi.includes(item.komoditi_name));
+    }
+
+    // Filter by selected date
+    if (selectedDate) {
+      filtered = filtered.filter(item => item.tanggal === selectedDate);
+    }
+
+    // Filter by keterangan
+    if (filterKet && filterKet !== "all") {
+      filtered = filtered.filter(item => item.keterangan === filterKet);
+    }
+
+    setFilteredData(filtered);
+  }, [keyword, komoditi, selectedDate, filterKet, hargaData]);
+
+  if (loading) {
+    return (
+      <Container
+        className="d-flex justify-content-center align-items-center"
+        style={{ minHeight: "100vh" }}
+      >
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Alert variant="danger">{error}</Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container>
-      <Row className="mb-3">
-        <Col>
-          <h4>Harga per tanggal: {formattedTanggalUpdate}</h4>
-        </Col>
-      </Row>
-
-      <Row className="mb-3">
-        <Col md={4}>
-          <SearchBar keyword={keyword} keywordChange={keywordChange} />
-        </Col>
-        <Col md={4}>
-          <FilterBar filterKet={filterKet} setFilterKet={setFilterKet} /> {/* Pastikan setFilterKet dioper dengan benar */}
-        </Col>
-        <Col md={4}>
-          <DateFilter
-            selectedDate={selectedDate}
-            handleDateChange={setSelectedDate}
-          />
-        </Col>
-      </Row>
-
+      <TableAction
+        keyword={keyword}
+        setKeyword={setKeyword}
+        komoditi={komoditi}
+        setKomoditi={setKomoditi}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        filterKet={filterKet}
+        setFilterKet={setFilterKet}
+        komoditiOptions={komoditiOptions}
+      />
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -115,60 +128,17 @@ function KomoditiTable() {
                 <td className="sticky-column">{index + 1}</td>
                 <td className="sticky-column">{item.komoditi_name}</td>
                 <td className="sticky-column">{item.satuan}</td>
-                <td>
-                  {parseInt(item.p_guntur)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
-                <td>
-                  {parseInt(item.p_kadungora)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
-                <td>
-                  {parseInt(item.p_cikajang)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
-                <td>
-                  {parseInt(item.p_pameungpeuk)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
-                <td>
-                  {parseInt(item.p_samarang)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
-                <td>
-                  {parseInt(item.p_malangbong)
-                    .toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })
-                    .split(",00")
-                    .join("")}
-                </td>
+                {["p_guntur", "p_kadungora", "p_cikajang", "p_pameungpeuk", "p_samarang", "p_malangbong"].map((market) => (
+                  <td key={market}>
+                    {parseInt(item[market])
+                      .toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })
+                      .split(",00")
+                      .join("")}
+                  </td>
+                ))}
                 <td>
                   {parseInt(item.med_minggu_ini)
                     .toLocaleString("id-ID", {

@@ -1,0 +1,71 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #B62F2C;
+  --secondary-color: #1f5946;
+  --background-color: #B0B0B0;
+  --highlight-color: #EAB833;
+  --accent-color: #EAB834;
+  --color-text: #231942;
+  --navbar-color: #ffffff;
+  --navbar-color-text: #000000;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 15px 0;
+  width: 100%;
+  background-color: var(--navbar-color);
+  z-index: 1020;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .nav-link {
+  padding: 5px 10px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--navbar-color-text);
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: var(--secondary-color);
+}
+
+.sticky-column {
+  position: sticky;
+  left: 0;
+  background-color: white;
+  z-index: 2;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-column + .sticky-column {
+  left: 30px;
+}
+
+.sticky-column + .sticky-column + .sticky-column {
+  left: 110px;
+}
+
+.carousel-inner {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.icon-login {
+  margin-right: 8px;
+}
+
+.homepage {
+  margin: 20px 20px;
+}
+
+.dropdown {
+  background-color: #ffffff;
+}

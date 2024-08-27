@@ -7,7 +7,8 @@ function SearchBar({ keyword, keywordChange }) {
       type="text" 
       placeholder="Cari Berdasarkan Komoditi..." 
       value={keyword} 
-      onChange={keywordChange} 
+      onChange={(e) => keywordChange(e.target.value)}
+      // onChange={keywordChange} 
     />
   );
 }

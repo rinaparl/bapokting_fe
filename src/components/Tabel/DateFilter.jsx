@@ -6,7 +6,7 @@ const DateFilter = ({ selectedDate, handleDateChange }) => {
     <Form.Group controlId="dateSelect">
       <Form.Control
         type="date"
-        value={selectedDate}
+        value={selectedDate || ""}
         onChange={(e) => handleDateChange(e.target.value)}
         className="mb-3"
       />
