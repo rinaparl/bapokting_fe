@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/main.css";
-import { Spinner, Alert } from "react-bootstrap";
+import { Spinner, Alert, Container, Card } from "react-bootstrap";
 import KomoditiTable from "../components/KomoditiTable";
 import Banner from "../components/Banner";
 
@@ -47,15 +47,19 @@ function HomePage() {
     <>
       <Banner />
 
+      <Container fluid className="custom-container">
       <section className="homepage">
         <h1>Informasi Harga Bahan Pokok Penting Terbaru</h1>
         <p>Sumber Data: DISPERINDAG ESDM KABUPATEN GARUT</p>
         <p>Update per tanggal: {formattedTanggalUpdate}</p>
       </section>
 
-      <section>
-        <KomoditiTable filteredData={hargaData} />
-      </section>
+      
+        <Card className="custom-card">
+         <KomoditiTable filteredData={hargaData} />
+        </Card>
+        
+      </Container>
     </>
   );
 }

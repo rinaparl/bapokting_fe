@@ -91,7 +91,7 @@ function KomoditiTable() {
   }
 
   return (
-    <Container>
+    <Container fluid>
       <TableAction
         keyword={keyword}
         setKeyword={setKeyword}

@@ -66,6 +66,99 @@
   margin: 20px 20px;
 }
 
+.table thead th {
+  background-color: var(--secondary-color);
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  cursor: pointer;
+  background-color: lightgray;
+}
+
+.table tbody tr.selected {
+  background-color: darkgray;
+  color: white;
+}
+
+.table tbody tr:not(.selected) {
+  background-color: lightgray;
+  color: black;
+}
+
+
 .dropdown {
   background-color: #ffffff;
 }
+
+.custom-container {
+  margin: 20px;
+}
+
+.custom-card {
+  border: 2px solid var(--secondary-color);
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.footer {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 40px;
+  border-radius: 3px;
+}
+
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: justify;
+  color: var(--accent-color);
+}
+
+.footer-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.footer-links h4 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.footer-links .nav-link {
+  color: white;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.footer-links .nav-link:hover {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .footer-title {
+    font-size: 1.25rem;
+  }
+  
+  .footer-description {
+    font-size: 0.9rem;
+  }
+  
+  .footer-links h4 {
+    font-size: 1rem;
+  }
+}
+
+.custom-line {
+  border-top: 3px solid var(--accent-color);
+  width: 80%;
+  margin: 20px auto;
+  border-radius: 50px;
+}
+

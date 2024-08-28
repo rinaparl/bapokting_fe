@@ -1,15 +1,20 @@
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 
 function SearchBar({ keyword, keywordChange }) {
   return (
-    <Form.Control 
-      type="text" 
-      placeholder="Cari Berdasarkan Komoditi..." 
-      value={keyword} 
-      onChange={(e) => keywordChange(e.target.value)}
-      // onChange={keywordChange} 
-    />
+    <InputGroup>
+      <InputGroup.Text>
+        <FaSearch />
+      </InputGroup.Text>
+      <Form.Control
+        type="text"
+        placeholder="Cari Komoditi ..."
+        value={keyword}
+        onChange={(e) => keywordChange(e.target.value)}
+      />
+    </InputGroup>
   );
 }
 
