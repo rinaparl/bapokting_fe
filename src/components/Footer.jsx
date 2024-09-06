@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/main.css";
-import { Container, Row, Col, Nav, Stack, NavLink } from "react-bootstrap";
+import { Container, Row, Col, Nav, NavLink } from "react-bootstrap";
 
 function Footer() {
   return (
@@ -8,9 +8,9 @@ function Footer() {
       <Container fluid>
         <Row>
           <Col xs={12} md={4} className="mb-4">
-            <h2 className="footer-title">BAPOKGarut</h2>
+            <h2 className="footer-title">BAPOKTING Garut</h2>
             <p className="footer-description">
-              BAPOKGarut merupakan website ini berguna untuk memudahkan masyarakat melihat Informasi
+              BAPOKTING Garut merupakan website yang berguna untuk memudahkan masyarakat melihat Informasi
               Harga Bahan Kebutuhan Pokok Masyarakat dan Barang Penting Lainnya
               di pasar-pasar yang ada di Kabupaten Garut.
             </p>

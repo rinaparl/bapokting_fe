@@ -31,7 +31,13 @@ function HomePage() {
     getKomoditi();
   }, []);
 
-  if (loading) return <Spinner animation="border" className="d-flex justify-content-center align-items-center" />;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <Spinner animation="border" role="status" />
+      </div>
+    );
+  }
   if (error) return <Alert variant="danger">{error}</Alert>;
 
   const formattedTanggalUpdate = new Date(tanggalUpdate).toLocaleDateString(
@@ -44,23 +50,21 @@ function HomePage() {
   );
 
   return (
-    <>
+    <Container>
       <Banner />
 
       <Container fluid className="custom-container">
-      <section className="homepage">
-        <h1>Informasi Harga Bahan Pokok Penting Terbaru</h1>
-        <p>Sumber Data: DISPERINDAG ESDM KABUPATEN GARUT</p>
-        <p>Update per tanggal: {formattedTanggalUpdate}</p>
-      </section>
+        <section className="homepage">
+          <h1>Informasi Harga Bahan Pokok dan Barang Penting Terbaru</h1>
+          <p>Sumber Data: DISPERINDAG ESDM KABUPATEN GARUT</p>
+          <p>Update per tanggal: {formattedTanggalUpdate}</p>
+        </section>
 
-      
         <Card className="custom-card">
-         <KomoditiTable filteredData={hargaData} />
+          <KomoditiTable filteredData={hargaData} />
         </Card>
-        
       </Container>
-    </>
+    </Container>
   );
 }
 

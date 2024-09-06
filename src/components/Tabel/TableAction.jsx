@@ -4,6 +4,7 @@ import SearchBar from "./SearchBar";
 import FilterBar from "./FilterBar";
 import DateFilter from "./DateFilter";
 import KomoditiFilter from "./KomoditiFilter";
+import '../../styles/main.css';
 
 const TableAction = ({
   keyword,
@@ -28,14 +29,15 @@ const TableAction = ({
   };
 
   return (
-    <Row className="mb-4">
+    <>
+      <Row className="mb-3">
       <Col md={3}>
         <SearchBar
           keyword={keyword}
           keywordChange={setKeyword}
         />
       </Col>
-      <Col md={3}>
+      <Col md={3} className="table-action">
         <KomoditiFilter
           options={komoditiOptions}
           selectedKomoditi={komoditi}
@@ -55,6 +57,7 @@ const TableAction = ({
         />
       </Col>
     </Row>
+    </>
   );
 };
 

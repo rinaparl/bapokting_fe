@@ -19,7 +19,7 @@ function KomoditiFilter({ options = [], selectedKomoditi, onChange }) {
   return (
     <Dropdown show={showDropdown} onClick={toggleDropdown}>
       <DropdownButton
-        // variant="secondary"
+        variant="outline-secondary"
         title="Filter Komoditi"
         onClick={() => setShowDropdown((prev) => !prev)}
       >

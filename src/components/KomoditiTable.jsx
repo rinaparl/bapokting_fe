@@ -13,11 +13,46 @@ function KomoditiTable() {
   const [komoditi, setKomoditi] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [filterKet, setFilterKet] = useState("");
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchLatestDate = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:5000/komoditi/latest-date");
+  //       if (response.data.success && response.data.result.length > 0) {
+  //         const latestDate = response.data.result[0].tanggal;
+  //         setSelectedDate(latestDate);
+  //       } else {
+  //         setError("Tidak dapat mengambil tanggal terbaru");
+  //       }
+  //     } catch (err) {
+  //       setError("Gagal mengambil tanggal terbaru dari server");
+  //     }
+  //   };
+  
+  //   fetchLatestDate();
+  // }, []);
+  
+console.log(selectedDate);
 
   useEffect(() => {
     const getKomoditi = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/komoditi/list");
+        // const response = await axios.get(`http://localhost:5000/komoditi/list/${selectedDate? '?tanggal=' + selectedDate : ''}`);
+        // console.log('ini respnya', response);
+
+        let url = `http://localhost:5000/komoditi/list`;
+        if (selectedDate) {
+          url += `?tanggal=${selectedDate}`;
+        }
+
+        const response = await axios.get(url);
+        console.log('Response dari backend:', response);
+
+        //    {
+        //   params: { date: selectedDate }
+        // });
+
         if (response.data.success && Array.isArray(response.data.result)) {
           const komoditiOptions = response.data.result.map(item => ({
             label: item.komoditi_name,
@@ -27,7 +62,6 @@ function KomoditiTable() {
           setHargaData(response.data.result);
           setFilteredData(response.data.result);
           setKomoditiOptions(komoditiOptions);
-          // console.log("Komoditi Options:", komoditiOptions);
         } else {
           setError("Data yang diterima tidak sesuai");
         }
@@ -39,7 +73,7 @@ function KomoditiTable() {
     };
 
     getKomoditi();
-  }, []);
+  }, [selectedDate]);
 
   useEffect(() => {
     let filtered = hargaData;
@@ -68,6 +102,7 @@ function KomoditiTable() {
 
     setFilteredData(filtered);
   }, [keyword, komoditi, selectedDate, filterKet, hargaData]);
+// console.log(filteredData);
 
   if (loading) {
     return (
@@ -89,6 +124,10 @@ function KomoditiTable() {
       </Container>
     );
   }
+
+  const handleRowClick = (index) => {
+    setSelectedRow(index);
+  };
 
   return (
     <Container fluid>
@@ -118,13 +157,17 @@ function KomoditiTable() {
             <th>Rata-Rata Minggu Ini</th>
             <th>Rata-Rata Minggu Lalu</th>
             <th>Keterangan</th>
-            <th>%</th>
+            {/* <th>%</th> */}
           </tr>
         </thead>
         <tbody>
           {filteredData.length > 0 ? (
             filteredData.map((item, index) => (
-              <tr key={item.id}>
+              <tr
+                key={item.id}
+                onClick={() => handleRowClick(index)}
+                className={selectedRow === index ? "selected-row" : "deselected-row"}
+              >
                 <td className="sticky-column">{index + 1}</td>
                 <td className="sticky-column">{item.komoditi_name}</td>
                 <td className="sticky-column">{item.satuan}</td>
@@ -160,11 +203,11 @@ function KomoditiTable() {
                 <td
                   style={{
                     backgroundColor:
-                      item.keterangan === "naik"
+                      item.keterangan === "Naik"
                         ? "red"
-                        : item.keterangan === "turun"
+                        : item.keterangan === "Turun"
                         ? "#006400"
-                        : item.keterangan === "tetap"
+                        : item.keterangan === "Tetap"
                         ? "#4D96FF"
                         : "transparent",
                     color: "white",
@@ -173,7 +216,7 @@ function KomoditiTable() {
                 >
                   {item.keterangan}
                 </td>
-                <td
+                {/* <td
                   style={{
                     backgroundColor:
                       item.keterangan === "naik"
@@ -190,22 +233,22 @@ function KomoditiTable() {
                   {item.keterangan === "naik" ? (
                     <div>
                       <i className="fas fa-arrow-up"></i>
-                      <span className="pl-3">{item.persentase}</span>
+                      <span className="pl-3">{item.persentase.toFixed(2)}%</span>
                     </div>
                   ) : item.keterangan === "turun" ? (
                     <div>
                       <i className="fas fa-arrow-down"></i>
-                      <span className="pl-3">{item.persentase}</span>
+                      <span className="pl-3">{item.persentase.toFixed(2)}%</span>
                     </div>
                   ) : (
-                    <span>{item.persentase}</span>
+                    <span>{item.persentase.toFixed(2)}%</span>
                   )}
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={13}>Tidak ada data</td>
+              <td colSpan={13} textAlign="center">Tidak ada data</td>
             </tr>
           )}
         </tbody>

@@ -21,7 +21,11 @@ function Banner() {
   return (
     <Carousel activeIndex={index} onSelect={handleSelect}>
       <Carousel.Item>
-        <img src={Banner1} alt="Selamat Datang" />
+        <img
+          src={Banner1}
+          alt="Selamat Datang"
+          height={50}
+        />
       </Carousel.Item>
       <Carousel.Item>
         <img src={Banner2} alt="Harga Bahan Pokok" />
