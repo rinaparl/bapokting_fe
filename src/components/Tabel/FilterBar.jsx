@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, DropdownButton, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const FilterBar = ({ filterKet, setFilterKet }) => {
   return (
@@ -9,9 +9,9 @@ const FilterBar = ({ filterKet, setFilterKet }) => {
       className="mb-3"
     >
       <option value="all">All</option>
-      <option value="naik">Naik</option>
-      <option value="turun">Turun</option>
-      <option value="tetap">Tetap</option>
+      <option value="Naik">Naik</option>
+      <option value="Turun">Turun</option>
+      <option value="Tetap">Tetap</option>
     </Form.Select>
   );
 };

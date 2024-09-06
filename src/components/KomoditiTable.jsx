@@ -15,24 +15,6 @@ function KomoditiTable() {
   const [filterKet, setFilterKet] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchLatestDate = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/komoditi/latest-date");
-  //       if (response.data.success && response.data.result.length > 0) {
-  //         const latestDate = response.data.result[0].tanggal;
-  //         setSelectedDate(latestDate);
-  //       } else {
-  //         setError("Tidak dapat mengambil tanggal terbaru");
-  //       }
-  //     } catch (err) {
-  //       setError("Gagal mengambil tanggal terbaru dari server");
-  //     }
-  //   };
-  
-  //   fetchLatestDate();
-  // }, []);
-  
 console.log(selectedDate);
 
   useEffect(() => {
@@ -48,10 +30,6 @@ console.log(selectedDate);
 
         const response = await axios.get(url);
         console.log('Response dari backend:', response);
-
-        //    {
-        //   params: { date: selectedDate }
-        // });
 
         if (response.data.success && Array.isArray(response.data.result)) {
           const komoditiOptions = response.data.result.map(item => ({
@@ -248,7 +226,7 @@ console.log(selectedDate);
             ))
           ) : (
             <tr>
-              <td colSpan={13} textAlign="center">Tidak ada data</td>
+              <td colSpan={13} style={{ textAlign: "center" }}>Tidak ada data</td>
             </tr>
           )}
         </tbody>

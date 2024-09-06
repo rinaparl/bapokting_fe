@@ -1,11 +1,11 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
-import DateFilter from './DateFilter';
-import KomoditiFilter from './KomoditiFilter';
+import DateFilter from '../Tabel/DateFilter';
+import KomoditiFilter from '../Tabel/KomoditiFilter';
 
 const GrafikAction = () => {
   return (
-    <div>
+    <>
       <Row className="mb-4">
       <Col md={4}>
         <KomoditiFilter komoditi={keyword} setKomoditi={keywordChange} />
@@ -17,7 +17,7 @@ const GrafikAction = () => {
         />
       </Col>
     </Row>
-    </div>
+    </>
   )
 }
 
